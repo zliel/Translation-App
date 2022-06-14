@@ -2,6 +2,7 @@ package com.example.translateapp.controller;
 
 import com.example.translateapp.config.HttpConfig;
 import com.example.translateapp.model.Language;
+import com.example.translateapp.model.LanguageResponse;
 import com.example.translateapp.model.Translation;
 import com.example.translateapp.model.TranslationResponseContainer;
 import com.example.translateapp.repository.LanguageRepository;
@@ -23,6 +24,7 @@ public class TranslationRestController {
     private final LanguageRepository repository;
 
     private final String POST_URL = "https://deep-translate1.p.rapidapi.com/language/translate/v2";
+    private final String GET_URL = "https://deep-translate1.p.rapidapi.com/language/translate/v2/languages";
 
     public TranslationRestController(RestTemplate template, LanguageRepository repository) {
         this.template = template;
@@ -34,6 +36,15 @@ public class TranslationRestController {
         ArrayList<Language> languages = new ArrayList<>();
         repository.findAll().forEach(languages::add);
         return ResponseEntity.ok().body(languages);
+    }
+
+    @GetMapping("/api/languages")
+    public void saveAllLanguages() {
+        LanguageResponse response = template.exchange(GET_URL, HttpMethod.GET, HttpConfig.getHeaders(), LanguageResponse.class)
+                .getBody();
+        assert response != null;
+
+        repository.saveAll(response.getLanguages());
     }
 
     @GetMapping("/api/translate/{src}/{target}/{text}")
