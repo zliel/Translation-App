@@ -38,14 +38,14 @@ public class TranslationRestController {
         return ResponseEntity.ok().body(languages);
     }
 
-    @GetMapping("/api/languages")
-    public void saveAllLanguages() {
-        LanguageResponse response = template.exchange(GET_URL, HttpMethod.GET, HttpConfig.getHeaders(), LanguageResponse.class)
-                .getBody();
-        assert response != null;
-
-        repository.saveAll(response.getLanguages());
-    }
+//    @GetMapping("/api/languages")
+//    public void saveAllLanguages() {
+//        LanguageResponse response = template.exchange(GET_URL, HttpMethod.GET, HttpConfig.getHeaders(), LanguageResponse.class)
+//                .getBody();
+//        assert response != null;
+//
+//        repository.saveAll(response.getLanguages());
+//    }
 
     @GetMapping("/api/translate/{src}/{target}/{text}")
     public ResponseEntity<Translation> translateText(@PathVariable("src") String sourceLang, @PathVariable("target") String targetLang, @PathVariable("text") String text) {

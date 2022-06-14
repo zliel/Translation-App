@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 @Controller
 public class TranslationController {
@@ -39,7 +40,7 @@ public class TranslationController {
     public String home(Model model) {
         ArrayList<Language> languages = new ArrayList<>();
         languageRepository.findAll().forEach(languages::add);
-        languages.sort(null);
+        Collections.sort(languages);
         model.addAttribute("languages", languages);
         model.addAttribute("translationRequest", new TranslationRequest());
         return "Home";
