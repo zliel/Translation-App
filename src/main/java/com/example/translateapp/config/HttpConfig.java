@@ -9,7 +9,7 @@ import org.springframework.http.MediaType;
 public class HttpConfig {
 
     private static final String host = "deep-translate1.p.rapidapi.com";
-    private static final String apiKey = "";
+    private static final String apiKey = System.getenv("API-KEY");
 
     public static HttpEntity<String> getHeaders() {
         HttpHeaders headers = new HttpHeaders();
