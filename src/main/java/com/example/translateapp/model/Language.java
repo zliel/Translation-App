@@ -19,6 +19,6 @@ public class Language implements Comparable<Language>{
 
     @Override
     public int compareTo(Language o) {
-        return language.compareTo(o.language);
+        return name.compareTo(o.getName());
     }
 }
