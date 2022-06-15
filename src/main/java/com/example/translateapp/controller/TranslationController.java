@@ -57,7 +57,7 @@ public class TranslationController {
             System.out.println("From DB: " + translationFromDb);
             translationFromDb.setId(null);
             model.addAttribute("translation", translationFromDb);
-            return new ModelAndView("translation-response", model);
+            return new ModelAndView("Translation-Response", model);
         }
 
         TranslationResponseContainer response = template.exchange(POST_URL, HttpMethod.POST, HttpConfig.postHeaders(request.getSourceText(), request.getSourceLanguage(), request.getTargetLanguage()), TranslationResponseContainer.class)
@@ -71,13 +71,13 @@ public class TranslationController {
 
         translation.setId(null);
         model.addAttribute("translation", translation);
-        return new ModelAndView("translation-Response", model);
+        return new ModelAndView("Translation-Response", model);
     }
 
-    @GetMapping("/translation-response")
-    public String translationResponse() {
-        return "Translation-Response";
-    }
+//    @GetMapping("/translation-response")
+//    public String translationResponse() {
+//        return "Translation-Response";
+//    }
 
     private void saveTranslationToDB(TranslationRequest request, Translation translation) {
         translation.setSourceText(request.getSourceText());
