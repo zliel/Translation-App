@@ -8,7 +8,6 @@ import com.example.translateapp.model.TranslationResponseContainer;
 import com.example.translateapp.repository.LanguageRepository;
 import com.example.translateapp.repository.TranslationRepository;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,11 +70,6 @@ public class TranslationController {
         model.addAttribute("translation", translation);
         return new ModelAndView("Translation-Response", model);
     }
-
-//    @GetMapping("/translation-response")
-//    public String translationResponse() {
-//        return "Translation-Response";
-//    }
 
     private void saveTranslationToDB(TranslationRequest request, Translation translation) {
         translation.setSourceText(request.getSourceText());
