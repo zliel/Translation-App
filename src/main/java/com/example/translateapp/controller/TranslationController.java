@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,12 +49,13 @@ public class TranslationController {
     }
 
     @PostMapping("/translate")
-    public ResponseEntity<Translation> translateText(@ModelAttribute(value="translationRequest") TranslationRequest request) {
+    public RedirectView translateText(@ModelAttribute(value="translationRequest") TranslationRequest request, RedirectAttributes attributes) {
         Translation translationFromDb = translationRepository.findTranslationBySourceTextAndTargetLanguage(request.getSourceText(), request.getTargetLanguage());
         if(translationFromDb != null) {
             System.out.println("From DB: " + translationFromDb);
             translationFromDb.setId(null);
-            return ResponseEntity.ok().body(translationFromDb);
+            attributes.addAttribute("translation", translationFromDb);
+            return new RedirectView("Translation-Response");
         }
 
         TranslationResponseContainer response = template.exchange(POST_URL, HttpMethod.POST, HttpConfig.postHeaders(request.getSourceText(), request.getSourceLanguage(), request.getTargetLanguage()), TranslationResponseContainer.class)
@@ -65,7 +68,8 @@ public class TranslationController {
         saveReverseTranslationToDB(translation);
 
         translation.setId(null);
-        return ResponseEntity.ok().body(translation);
+        attributes.addAttribute("translation", translation);
+        return new RedirectView("Translation-Response");
     }
 
     private void saveTranslationToDB(TranslationRequest request, Translation translation) {
