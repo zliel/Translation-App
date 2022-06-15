@@ -69,7 +69,12 @@ public class TranslationController {
 
         translation.setId(null);
         attributes.addAttribute("translation", translation);
-        return new RedirectView("Translation-Response");
+        return new RedirectView("translation-Response");
+    }
+
+    @GetMapping("/translation-response")
+    public String translationResponse() {
+        return "Translation-Response";
     }
 
     private void saveTranslationToDB(TranslationRequest request, Translation translation) {
