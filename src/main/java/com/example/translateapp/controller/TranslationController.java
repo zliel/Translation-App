@@ -55,7 +55,7 @@ public class TranslationController {
             System.out.println("From DB: " + translationFromDb);
             translationFromDb.setId(null);
             attributes.addAttribute("translation", translationFromDb);
-            return new RedirectView("Translation-Response");
+            return new RedirectView("translation-response");
         }
 
         TranslationResponseContainer response = template.exchange(POST_URL, HttpMethod.POST, HttpConfig.postHeaders(request.getSourceText(), request.getSourceLanguage(), request.getTargetLanguage()), TranslationResponseContainer.class)
