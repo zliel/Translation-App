@@ -8,6 +8,7 @@ import com.example.translateapp.model.TranslationResponseContainer;
 import com.example.translateapp.repository.LanguageRepository;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class TranslationRestController {
 
     private final RestTemplate template;
